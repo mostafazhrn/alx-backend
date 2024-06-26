@@ -9,21 +9,20 @@ class LIFOCache(BaseCaching):
     def __init__(self):
         """ This method sets the variable """
         super().__init__()
-        self.keys = []
+        self.last_key = ''
 
     def put(self, key, item):
-        """ This method assigns item value to the key in self.cache_data """
-        if key is not None and item is not None:
+        """ This method assigns the item value to the key in self.cache_data """
+        if key and item:
             self.cache_data[key] = item
-        if key not in self.keys:
-            self.keys.append(key)
-        if len(self.keys) > BaseCaching.MAX_ITEMS:
-            del_key = self.keys.pop()
-            del self.cache_data[del_key]
-            print("DISCARD: {:s}".format(del_key))
-
+            if len(self.cache_data) > BaseCaching.MAX_ITEMS:
+                print("DISCARD: {:s}".format(self.last_key))
+                del self.cache_data[self.last_key]
+            self.last_key = key
+    
     def get(self, key):
         """ This method returns the value in self.cache_data linked to key """
-        if key is not None and key in self.cache_data:
+        if key is None or self.cache_data.get(key) is None:
+            return None
+        if key in self.cache_data:
             return self.cache_data[key]
-        return None
