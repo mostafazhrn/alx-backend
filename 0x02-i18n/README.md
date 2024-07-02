@@ -1,0 +1,1 @@
+this is a readme file for the task 0x02-i18n for the alx software engneering program which consists of 8 mandatory tasks
