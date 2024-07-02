@@ -49,7 +49,6 @@ def get_locale():
     local = request.args.get('locale', None)
     if local and local in app.config['LANGUAGES']:
         return local
-    
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
